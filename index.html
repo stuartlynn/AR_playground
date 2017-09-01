@@ -1,0 +1,39 @@
+<html>
+	<head>
+
+	</head>
+	<body>
+		
+		
+		<script src='node_modules/three/three.js'></script>
+		<script src='node_modules/three.ar.js/dist/three.ar.js'></script>
+		
+		<script>
+		
+			(function(){
+				THREE.ARUtils.getARDisplay().then(init)
+
+				function init(display){
+					vrDisplay = display 
+					renderer = new THREE.WebGLRenderer({alpha:true})
+					scene  = new THREE.Scene();
+
+					arView = new THREE.ARView(vrDisplay, renderer);
+					camera = new THREE.ARPerspectiveCamera(vrDisplay, 60
+						, window.innerWidth / window.innerHeight
+						, vrDisplay.depthNear, vrDisplay.depthFar);
+						vrControls = new THREE.VRControls(camera);
+
+					update();
+				}
+				function update(){
+					vrControls.update();
+					arView.render();
+					renderer.clearDepth();
+					renderer.render(scene,camera);
+					vrDisplay.requestAnimationFrame(update)
+				}
+			})();
+		</script>
+	</body>
+</html>
